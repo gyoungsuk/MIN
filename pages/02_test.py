@@ -36,20 +36,4 @@ question_bank = {
     "문제해결/갈등": [
         "친구랑 다툴 때 보통 어떻게 해결해?",
         "문제가 생기면 누구에게 먼저 말해?",
-        "갈등을 피하고 싶을 때 너는 어떻게 해?"
-    ]
-}
-
-st.title("💬 마음열기 질문툴")
-st.markdown("청소년과의 상담을 위한 질문을 선택해보세요.")
-
-# 선택창
-question_type = st.selectbox("질문유형을 선택하세요", list(question_bank.keys()))
-
-if question_type:
-    st.subheader(f"📘 {question_type} 질문 목록")
-    for i, q in enumerate(question_bank[question_type], 1):
-        st.markdown(f"{i}. {q}")
-
-    if st.button("무작위 질문 추천"):
-        st.success(random.choice(question_bank[question_type]))
+        "갈등을

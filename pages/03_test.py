@@ -1,4 +1,3 @@
-
 import streamlit as st
 import random
 
@@ -41,51 +40,16 @@ question_bank = {
     ]
 }
 
-# Streamlit 앱 설정
-st.set_page_config(page_title="마음열기 질문툴", layout="wide")
 st.title("💬 마음열기 질문툴")
-st.caption("청소년의 마음을 여는 따뜻한 질문 도우미 🌱")
+st.markdown("청소년과의 상담을 위한 질문을 선택해보세요.")
 
-# 질문 유형 선택
-st.markdown("### 🧠 질문 유형을 선택하세요")
-question_type = st.selectbox("유형 선택", list(question_bank.keys()))
+# 선택창
+question_type = st.selectbox("질문유형을 선택하세요", list(question_bank.keys()))
 
-# 질문 표시 및 심각도 평가
 if question_type:
-    st.markdown(f"### 📘 '{question_type}' 질문 목록 및 감정 심각도 평가")
-    responses = []
+    st.subheader(f"📘 {question_type} 질문 목록")
+    for i, q in enumerate(question_bank[question_type], 1):
+        st.markdown(f"{i}. {q}")
 
-    for i, question in enumerate(question_bank[question_type], 1):
-        st.markdown(f"**{i}. {question}**")
-        severity = st.slider(
-            f"→ 이 질문에 대한 감정의 심각도는? (0: 전혀 없음 ~ 10: 매우 심각)",
-            0, 10, 0, key=f"slider_{i}"
-        )
-        responses.append({"질문": question, "심각도": severity})
-
-    # 감정 요약 결과 보기
-    if st.button("📊 감정 심각도 요약 보기"):
-        st.markdown("### 📝 감정 심각도 결과")
-        for item in responses:
-            st.write(f"- **{item['질문']}** → 심각도: {item['심각도']}점")
-
-        # 심각도 높은 질문 강조
-        st.markdown("### 🚨 심각도가 높은 질문")
-        high_risk = [r for r in responses if r['심각도'] >= 7]
-        if high_risk:
-            for r in high_risk:
-                st.warning(f"⚠️ **{r['질문']}** → {r['심각도']}점")
-        else:
-            st.success("심각도가 높은 질문은 없습니다.")
-
-    # 무작위 질문 추천
-    if st.button("🎲 무작위 질문 추천"):
-        st.info(f"랜덤 질문: **{random.choice(question_bank[question_type])}**")
-      emotion_icons = {
-    "😊 기쁨": "😊", 
-    "😐 무기력": "😐", 
-    "😢 슬픔": "😢"
-}
-
-selected_emotion = st.radio("지금 감정에 가장 가까운 이모지는?", list(emotion_icons.values()))
-
+    if st.button("무작위 질문 추천"):
+        st.success(random.choice(question_bank[question_type]))
